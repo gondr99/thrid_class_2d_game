@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8404c7f5b07d620488f6a26be65b06cf, type: 3}
+  m_Name: Apple
+  m_EditorClassIdentifier: 
+  itemName: APPLE
+  icon: {fileID: 1327993336159054791, guid: 5e62b700766858f4a8da4bb7093e8c6d, type: 3}
+  itemID: c6e7f3923052827449208c5841069d2d
+  maxStack: 10
+  dropChance: 10
+  description: "\uB9DB\uC788\uB294 \uC0AC\uACFC. \uC11C\uC724\uC774\uAC00 4\uAD50\uC2DC\uC5D0
+    \uBC30\uACE0\uD50C\uB54C \uCC98\uBA39\uB294 \uC0AC\uACFC\n\uC0B4\uCC0C\uB294
+    \uC0AC\uACFC.. \uADF8\uB798\uB3C4 \uACFC\uC790\uBCF4\uB2E8 \uB098\uC740 \uC0AC\uACFC
+    \n\uADF8\uB798\uB3C4 \uC591\uBC30\uCD94\uB294 \uB108\uBB34 \uBA39\uAE30 \uC2EB\uC5B4..."
