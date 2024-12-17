@@ -9,14 +9,13 @@ using UnityEngine;
 
 namespace GGM.Players
 {
-    public class PlayerInventoryData : InventoryData, IEntityComponent, IAfterInitable
+    public class PlayerInventoryData : InventoryData, IAfterInitable
     {
         [field: SerializeField] public GameEventChannelSO InventoryEventChannel { get; private set; }
 
-        private Player _player;
-        public void Initialize(Entity entity)
+        public override void Initialize(Entity entity)
         {
-            _player = entity as Player;
+            base.Initialize(entity);
             inventory = new List<InventoryItem>(); //인벤토리 생성
         }
         
@@ -37,7 +36,9 @@ namespace GGM.Players
 
         private void UpdateInventoryUI()
         {
-            
+            InventoryDataList evt = InventoryEvents.InventoryDataList;
+            evt.items = inventory;
+            InventoryEventChannel.RaiseEvent(evt);
         }
 
         public override void AddItem(ItemDataSO itemData, int count = 1)

@@ -10,6 +10,7 @@ namespace GGM.Inventories
         [SerializeField] protected TextMeshProUGUI _itemText;
 
         public InventoryItem item;
+        public RectTransform RectTrm => transform as RectTransform;
 
         public void UpdateSlot(InventoryItem newItem)
         {

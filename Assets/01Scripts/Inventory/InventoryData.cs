@@ -1,14 +1,21 @@
 using System.Collections.Generic;
 using System.Linq;
+using GGM.Entities;
 using GGM.Items;
 using UnityEngine;
 
 namespace GGM.Inventories
 {
-    public abstract class InventoryData : MonoBehaviour
+    public abstract class InventoryData : MonoBehaviour, IEntityComponent
     {
         public List<InventoryItem> inventory;
-
+        
+        protected Entity _entity;
+        public virtual void Initialize(Entity entity)
+        {
+            _entity = entity;
+        }
+        
         //하나만 가져올 때
         public virtual InventoryItem GetItem(ItemDataSO itemData) 
             => inventory.FirstOrDefault(inventoryItem => inventoryItem.data == itemData);
@@ -21,5 +28,14 @@ namespace GGM.Inventories
         public abstract void RemoveItem(ItemDataSO itemData, int count);
         public abstract bool CanAddItem(ItemDataSO itemData);
         public abstract bool CanRemoveItem(ItemDataSO itemData, int count);
+
+        [ContextMenu("Print inventory")]
+        private void PrintInventory()
+        {
+            foreach (var item in inventory)
+            {
+                Debug.Log($"{item.data.itemName} : {item.stackSize}");
+            }
+        }
     }
 }

@@ -1,4 +1,6 @@
 using System;
+using GGM.Entities;
+using GGM.Inventories;
 using UnityEngine;
 
 namespace GGM.Items
@@ -30,8 +32,13 @@ namespace GGM.Items
             _spriteRenderer.sprite = itemData.icon;
         }
 
-        public void PickUp()
+        public void PickUp(Collider2D picker)
         {
+            if (picker.TryGetComponent(out Entity entity))
+            {
+                InventoryData inventory = entity.GetCompo<InventoryData>(true);
+                inventory?.AddItem(_itemData); //여러개짜리 묶음도 드랍된다면 여기서 count넣는다.
+            }
             Destroy(gameObject);
         }
     }

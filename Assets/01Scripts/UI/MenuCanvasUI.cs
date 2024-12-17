@@ -17,6 +17,8 @@ namespace GGM.UI
         [SerializeField] private CanvasGroup _canvasGroup;
         [SerializeField] private PlayerInputSO _playerInput;
 
+        [SerializeField] private InventoryUI _inventoryUI; 
+        
         private UIWindowStatus _windowStatus = UIWindowStatus.Closed;
 
         private void Awake()
@@ -52,6 +54,7 @@ namespace GGM.UI
         {
             _windowStatus = UIWindowStatus.Closing;
             _playerInput.SetPlayerInput(true); //플레이어 입력을 복원해준다.
+            _inventoryUI.Close();
             SetWindow(false, () =>
             {
                 _windowStatus = UIWindowStatus.Closed;
@@ -64,6 +67,7 @@ namespace GGM.UI
             _windowStatus = UIWindowStatus.Opening;
             Time.timeScale = 0;
             _playerInput.SetPlayerInput(false);
+            _inventoryUI.Open();
             SetWindow(true, () => _windowStatus = UIWindowStatus.Opened, duration);
         }
 

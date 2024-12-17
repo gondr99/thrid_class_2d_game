@@ -10,6 +10,11 @@ namespace GGM.Players
         public event Action JumpEvent;
         public event Action AttackEvent;
         public event Action OpenMenuKeyEvent;
+
+        #region UIEvents
+        public event Action<Vector2> UINavigationKeyEvent;
+
+        #endregion
         
         public Vector2 InputDirection {get; private set;}
         
@@ -52,6 +57,8 @@ namespace GGM.Players
 
         public void OnNavigate(InputAction.CallbackContext context)
         {
+            if(context.performed)
+                UINavigationKeyEvent?.Invoke(context.ReadValue<Vector2>());
         }
 
         public void OnSubmit(InputAction.CallbackContext context)
