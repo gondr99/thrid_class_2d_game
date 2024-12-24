@@ -18,6 +18,7 @@ namespace GGM.UI
         [SerializeField] private PlayerInputSO _playerInput;
         [SerializeField] private ItemSelectionUI _itemSelectionUI;
         [SerializeField] private int _columnCount = 5;
+        [field:SerializeField] public SlotPopupUI PopupUI { get; private set; }
 
         [SerializeField] private RectTransform _selectionRect;
         public RectTransform RectTrm => transform as RectTransform;
@@ -29,6 +30,7 @@ namespace GGM.UI
         
         private ItemSlotUI _selectedItem;
         private int _selectedItemIndex;
+        private float _lastInputTime;
 
         private void Awake()
         {
@@ -37,21 +39,40 @@ namespace GGM.UI
 
         public void Open()
         {
+            _lastInputTime = Time.unscaledTime; 
+            
             InventoryEventChannel.AddListener<InventoryDataList>(HandleDataRefresh);
             InventoryEventChannel.RaiseEvent(InventoryEvents.RequestInventoryData);
 
             _playerInput.UINavigationKeyEvent += HandleUINavigation;
+            _playerInput.SubmitKeyEvent += HandleSubmit;
+            
             SelectItem(0);
+            PopupUI.SetActiveUI(false);
         }
         
         public void Close()
         {
             InventoryEventChannel.RemoveListener<InventoryDataList>(HandleDataRefresh);
             _playerInput.UINavigationKeyEvent -= HandleUINavigation;
+            _playerInput.SubmitKeyEvent -= HandleSubmit;
+        }
+
+        private void HandleSubmit()
+        {
+            Vector2 position = _selectionRect.InverseTransformPoint(_selectedItem.transform.position);
+            PopupUI.ShowPopupUI(position);
         }
 
         private void HandleUINavigation(Vector2 movement)
         {
+            float inputDelay = 0.1f;
+            if (_lastInputTime + inputDelay > Time.unscaledTime)
+            {
+                return;
+            }
+            
+            _lastInputTime = Time.unscaledTime;
             int nextIndex = GetNextSelection(movement);
             if(nextIndex != _selectedItemIndex)
                 SelectItem(nextIndex);

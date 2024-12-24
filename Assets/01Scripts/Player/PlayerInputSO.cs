@@ -10,6 +10,8 @@ namespace GGM.Players
         public event Action JumpEvent;
         public event Action AttackEvent;
         public event Action OpenMenuKeyEvent;
+        public event Action SubmitKeyEvent;
+        public event Action CancelKeyEvent;
 
         #region UIEvents
         public event Action<Vector2> UINavigationKeyEvent;
@@ -63,10 +65,14 @@ namespace GGM.Players
 
         public void OnSubmit(InputAction.CallbackContext context)
         {
+            if(context.performed)
+                SubmitKeyEvent?.Invoke();
         }
 
         public void OnCancel(InputAction.CallbackContext context)
         {
+            if(context.performed)
+                CancelKeyEvent?.Invoke();
         }
         
         public void OnOpenMenu(InputAction.CallbackContext context)
